@@ -1,9 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import { Organization } from './organization.entity';
+import { Role } from './role.entity';
+import { Task } from './task.entity';
 
 @Entity()
 export class User {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column({ unique: true })
     username: string;
@@ -11,6 +14,13 @@ export class User {
     @Column()
     password: string;
 
-    @Column()
-    role: string; //* Owner, Admin, Viewer
+    @ManyToOne(() => Role) // Many users can have one role
+    role: string; // Owner, Admin, Viewer
+
+    @ManyToOne(() => Organization, org => org.users) // Many users can belong to one organization
+    organization: Organization;
+
+    @OneToMany(() => Task, task => task.owner) // One user can have many tasks
+    tasks: Task[];
+
 }

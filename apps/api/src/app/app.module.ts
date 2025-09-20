@@ -11,13 +11,18 @@ import { OrganizationModule } from './organization/organization.module';
 import { AuditLogController } from './audit-log/audit-log.controller';
 import { AuditLogModule } from './audit-log/audit-log.module';
 import { User } from './entities/user.entity';
+import { Task } from './entities/task.entity';
+import { Organization } from './entities/organization.entity';
+import { Permission } from './entities/permission.entity';
+import { Role } from './entities/role.entity';
+import { AuditLog } from './entities/audit-log.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'apps/api/taskmanagement.sqlite',
-      entities: [User],
+      entities: [User, Task, Organization, Permission, Role, AuditLog],
       synchronize: true,
     }),
     TypeOrmModule.forFeature([User]),
