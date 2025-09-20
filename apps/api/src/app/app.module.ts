@@ -25,7 +25,7 @@ import { AuditLog } from './entities/audit-log.entity';
       entities: [User, Task, Organization, Permission, Role, AuditLog],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Task, Organization, Permission, Role, AuditLog]),
     AuthModule,
     UserModule,
     RolesModule,
