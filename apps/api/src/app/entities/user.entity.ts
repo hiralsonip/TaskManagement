@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn, ManyToMany, JoinTable } from 'typeorm';
 import { Organization } from './organization.entity';
 import { Role } from './role.entity';
 import { Task } from './task.entity';
@@ -14,11 +14,13 @@ export class User {
     @Column()
     password: string;
 
-    @ManyToOne(() => Role) // Many users can have one role
-    role: string; // Owner, Admin, Viewer
+    @ManyToMany(() => Role) // Many users can have many role
+    @JoinTable()
+    roles: Role[]; // Owner, Admin, Viewer
 
-    @ManyToOne(() => Organization, org => org.users) // Many users can belong to one organization
-    organization: Organization;
+    @ManyToOne(() => Organization, org => org.users, { nullable: true }) // Many users can belong to one organization
+    @JoinColumn({ name: 'organizationId' })
+    organization?: Organization;
 
     @OneToMany(() => Task, task => task.owner) // One user can have many tasks
     tasks: Task[];

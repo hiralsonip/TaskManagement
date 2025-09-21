@@ -16,6 +16,7 @@ import { Organization } from './entities/organization.entity';
 import { Permission } from './entities/permission.entity';
 import { Role } from './entities/role.entity';
 import { AuditLog } from './entities/audit-log.entity';
+import { SeederModule } from '../seeder/seede.module';
 
 @Module({
   imports: [
@@ -25,13 +26,14 @@ import { AuditLog } from './entities/audit-log.entity';
       entities: [User, Task, Organization, Permission, Role, AuditLog],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([User, Task, Organization, Permission, Role, AuditLog]),
+    // TypeOrmModule.forFeature([User, Task, Organization, Permission, Role, AuditLog]),
     AuthModule,
     UserModule,
     RolesModule,
     TasksModule,
     OrganizationModule,
     AuditLogModule,
+    SeederModule
   ],
   controllers: [AppController, AuditLogController],
   providers: [AppService, OrganizationService],

@@ -1,14 +1,19 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
+import { permission } from 'process';
 
 @Injectable()
 export class AuthService {
 
-    constructor(private userService: UserService) { }
+    constructor(
+        private userService: UserService,
+        private jwtService: JwtService
+    ) { }
 
     async loginUser(username: string, password: string): Promise<any> {
-        const user = await this.userService.findOne(username);
+        const user = await this.userService.findOneWithRoles(username);
 
         if (!user) {
             throw new UnauthorizedException('Invalid credentials');
@@ -20,11 +25,27 @@ export class AuthService {
         }
 
         const { password: pwd, ...result } = user;
-        return result;
+
+        //* JWT Token come here
+        const payload = {
+            username: user.username,
+            sub: user.id,
+            roles: user.roles.map(role => role.name),
+            permissions: user.roles.flatMap(role => role.permissions.map(p => p.name))
+        };
+        const access_token = await this.jwtService.signAsync(payload);
+
+        return {
+            ...result,
+            access_token
+        };
+
     }
 
     async registerUser(username: string, password: string): Promise<any> {
+
         const existingUser = await this.userService.findOne(username);
+
         if (existingUser) {
             throw new UnauthorizedException('Username already exists');
         }
