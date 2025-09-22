@@ -38,11 +38,4 @@ export class TasksController {
     deleteTask(@Param('id') id: string, @Request() req) {
         return this.taskService.deleteTask(req.user, id)
     }
-
-    // @Get('my-tasks')
-    // @HasRoles(RoleName.ADMIN, RoleName.OWNER)
-    // // @HasPermissions(PermissionName.READ_TASK)
-    // getMyTasks(@Request() req) {
-    //     return `Hello ${JSON.stringify(req.user)}`
-    // }
 }

@@ -26,7 +26,7 @@ export class AuthService {
 
         const { password: pwd, ...result } = user;
 
-        //* JWT Token come here
+        //* JWT Token 
         const payload = {
             username: user.username,
             sub: user.id,
@@ -36,7 +36,7 @@ export class AuthService {
         const access_token = await this.jwtService.signAsync(payload);
 
         return {
-            ...result,
+            user: result,
             access_token
         };
 
