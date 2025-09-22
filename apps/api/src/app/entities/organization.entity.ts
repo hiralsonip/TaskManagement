@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user.entity";
+import { Task } from "./task.entity";
 
 @Entity()
 export class Organization {
@@ -20,4 +21,7 @@ export class Organization {
 
     @OneToMany(() => User, user => user.organization) //* One organization can have many users
     users?: User[];
+
+    @OneToMany(() => Task, task => task.organization) //* One organization can have many tasks
+    tasks?: Task[];
 }

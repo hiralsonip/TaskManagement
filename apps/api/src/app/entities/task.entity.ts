@@ -13,11 +13,11 @@ export class Task {
     @Column({ default: 'todo' })
     status: 'todo' | 'inprogress' | 'done';
 
-    @ManyToOne(() => User) // Many tasks can belong to one user
+    @ManyToOne(() => User, user => user.tasks, { nullable: true }) // Many tasks can belong to one user
     @JoinColumn()
     owner: User;
 
-    @ManyToOne(() => Organization) // Many tasks can belong to one organization
+    @ManyToOne(() => Organization, org => org.tasks, { nullable: true }) // Many tasks can belong to one organization
     @JoinColumn()
     organization: Organization;
 
