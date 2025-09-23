@@ -52,6 +52,20 @@ nx serve dashboard
 
 Dashboard will start at `http://localhost:4200`.
 
+Login details for roles
+
+Owner
+Username - owner1
+Password - password
+
+Admin
+Username - admin1
+Password - password
+
+Viewer
+Username - viewer1
+Password - password
+
 ---
 
 ## Architecture Overview
