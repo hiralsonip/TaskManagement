@@ -9,7 +9,7 @@ Supports organizations, roles, and permissions with JWT authentication.
 
 ### Prerequisites
 - Node.js (>=18)
-- PostgreSQL (or SQLite for local development)
+- SQLite for local development
 - NX CLI: `npm install -g nx`
 
 ### 1. Clone the repository
