@@ -46,11 +46,19 @@ export class UserService {
         try {
             const user = await this.userRepository.findOne({
                 where: { username },
-                relations: ['roles', 'roles.permissions'],
+                relations: ['roles', 'roles.permissions', 'organization'],
             });
             return user
         } catch (error) {
             console.error(error)
         }
+    }
+
+    async getProfile(id: string) {
+        const user = await this.userRepository.findOne({
+            where: { id },
+            relations: ['roles', 'roles.permissions', 'organization']
+        });
+        return user;
     }
 }

@@ -26,12 +26,14 @@ export class AuthService {
 
         const { password: pwd, ...result } = user;
 
+        console.log("USER --- ", user)
         //* JWT Token 
         const payload = {
             username: user.username,
             sub: user.id,
             roles: user.roles.map(role => role.name),
-            permissions: user.roles.flatMap(role => role.permissions.map(p => p.name))
+            permissions: user.roles.flatMap(role => role.permissions.map(p => p.name)),
+            organization: user.organization.name
         };
         const access_token = await this.jwtService.signAsync(payload);
 

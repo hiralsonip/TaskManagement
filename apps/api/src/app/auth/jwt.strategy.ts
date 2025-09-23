@@ -12,7 +12,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         private userRepository: Repository<User>,
     ) {
         super({
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            jwtFromRequest: (req) => req?.cookies?.jwt,
+            ignoreExpiration: false,
             secretOrKey: process.env.JWT_SECRET || 'default'
         })
     }

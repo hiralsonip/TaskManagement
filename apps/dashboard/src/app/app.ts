@@ -9,5 +9,5 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./app.css'],
 })
 export class App {
-  protected title = 'Task Management';
+  protected title = 'Dashboard';
 }
