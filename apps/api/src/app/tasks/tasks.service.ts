@@ -76,7 +76,7 @@ export class TasksService {
 
         // Only owner or admin in org or the task owner can update
         if (!(fullUser.roles.some(r => ['Owner', 'Admin'].includes(r.name)) && task.organization.id === fullUser.organization.id) && task.owner.id !== fullUser.id) {
-            throw new ForbiddenException('You can not update this task')
+            throw new ForbiddenException('You can not update the task from different organization')
         }
 
         if (!updates.title || updates.title.trim().length === 0) {

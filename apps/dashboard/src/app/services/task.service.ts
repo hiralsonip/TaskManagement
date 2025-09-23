@@ -25,7 +25,16 @@ export class TaskService {
     }
 
     updateTask(id: string, updates: Partial<Task>) {
-        return this.http.put<Task>(`${this.apiUrl}/${id}`, updates);
+        return this.http.put<Task>(`${this.apiUrl}/${id}`, updates).pipe(
+            catchError((error) => {
+                if (error.error && error.error.message) {
+                    console.error("Nest Error Message - ", error.error.message)
+                } else {
+                    console.error("Unknown Error - ", error);
+                }
+                return throwError(() => error)
+            })
+        );
     }
 
     deleteTask(id: string) {

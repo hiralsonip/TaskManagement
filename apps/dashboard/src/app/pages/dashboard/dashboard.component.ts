@@ -104,9 +104,10 @@ export class DashboardComponent implements OnInit {
                 alert("Something went wrong. Task is not updated.")
             }
             console.log('Task updated successfully', updatedTask);
-        } catch (err: any) {
-            console.error('Failed to update task', err);
-            this.showToast('Failed to update task', 'error');
+        } catch (error: any) {
+            console.error('Update Task Error Message - ', error.error.message);
+            const err = error.error.message ? error.error.message : 'Failed to update task'
+            this.showToast(err, 'error')
         }
     }
 
@@ -154,7 +155,7 @@ export class DashboardComponent implements OnInit {
     }
 
     filterStatus = '';
-    sortBy = 'title';
+    sortBy = '';
     sortDirection: 'asc' | 'desc' = 'asc';
     get filteredTasks() {
         let filtered = this.tasks;
@@ -177,9 +178,12 @@ export class DashboardComponent implements OnInit {
                     aVal = a.owner?.username || '';
                     bVal = b.owner?.username || '';
                     break;
-                default:
+                case 'title':
                     aVal = a.title;
                     bVal = b.title;
+                    break;
+                default:
+                    return 0
             }
 
             if (aVal && bVal) {
