@@ -118,9 +118,10 @@ export class DashboardComponent implements OnInit {
                 this.taskCount = this.tasks.length;
                 this.showToast('Task deleted successfully', 'success');
             }
-        } catch (error) {
-            console.error('Failed to update task', error);
-            this.showToast('Failed to delete task', 'error');
+        } catch (error: any) {
+            console.error('Delete Task Error Message - ', error.error.message);
+            const err = error.error.message ? error.error.message : 'Failed to delete task'
+            this.showToast(err, 'error')
         }
     }
 

@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { catchError, Observable, throwError } from "rxjs";
 
 export interface Task {
     id: string;
@@ -29,7 +29,16 @@ export class TaskService {
     }
 
     deleteTask(id: string) {
-        return this.http.delete<{ message: string }>(`${this.apiUrl}/${id}`);
+        return this.http.delete<{ message: string }>(`${this.apiUrl}/${id}`).pipe(
+            catchError((error) => {
+                if (error.error && error.error.message) {
+                    console.error("Nest Error Message - ", error.error.message);
+                } else {
+                    console.error("Unknown Error - ", error);
+                }
+                return throwError(() => error)
+            })
+        );
     }
 
 }

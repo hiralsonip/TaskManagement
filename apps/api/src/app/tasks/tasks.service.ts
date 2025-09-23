@@ -127,7 +127,7 @@ export class TasksService {
         if (!task) throw new NotFoundException('Task not found');
 
         if (!(fullUser.roles.some(r => ['Owner', 'Admin'].includes(r.name)) && task.organization.id === fullUser.organization.id) && task.owner.id !== fullUser.id) {
-            throw new ForbiddenException('You can not delete this task')
+            throw new ForbiddenException('You can not delete the task from different organization')
         }
 
         const deletedTask = await this.taskRepository.remove(task)
