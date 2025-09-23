@@ -1,4 +1,3 @@
-````markdown
 # Task Management System
 
 A role-based task management system built with **Angular**, **NestJS**, and **TypeORM** inside an **NX monorepo**.  
